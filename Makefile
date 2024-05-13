@@ -5,4 +5,7 @@ test:
 	@go test -v ./...
 
 run: build
-	@./bin/ecom  
+	@./bin/ecom 
+
+install:
+	@go mod tidy	 
