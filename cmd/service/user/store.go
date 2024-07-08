@@ -32,7 +32,7 @@ func (s *Store) GetUserByEmail(email string) (*types.User, error) {
 	}
 
 	if u.ID == 0 {
-		return nil, fmt.Errorf("User not found.")
+		return nil, fmt.Errorf("user not found")
 	}
 
 	return u, nil
@@ -41,11 +41,14 @@ func (s *Store) GetUserByEmail(email string) (*types.User, error) {
 
 func ScanRunIntoUser(rows *sql.Rows) (*types.User, error) {
 	user := new(types.User)
-	err := rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Password, &user.Email, &user.CreatedAt)
+
+	/** The order of fields must be the same as in types.User */
+	err := rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Password, &user.CreatedAt)
 
 	if err != nil {
 		return nil, err
 	}
+
 	return user, nil
 
 }
@@ -67,7 +70,7 @@ func (s *Store) GetUserById(id string) (*types.User, error) {
 	}
 
 	if u.ID == 0 {
-		return nil, fmt.Errorf("User not found.")
+		return nil, fmt.Errorf("user not found")
 	}
 
 	return u, nil
