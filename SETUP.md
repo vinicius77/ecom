@@ -88,3 +88,7 @@ make migration add-order-items-table
 exit status 1
 make: *** [Makefile:17: migrate-up] Error 1
 ```
+
+#### Managin the MySQL DB
+
+I have installed the VSCode extension named `Database Client JDBC`. It is pretty handy!
