@@ -35,6 +35,14 @@ type Product struct {
 	CreatedAt   time.Time `json:"createdAt"`
 }
 
+type CreateProductPayload struct {
+	Name        string  `json:"name" validate:"required"`
+	Description string  `json:"description"`
+	Image       string  `json:"image"`
+	Price       float64 `json:"price" validate:"required"`
+	Quantity    int     `json:"quantity" validate:"required"`
+}
+
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserById(id string) (*User, error)
@@ -43,4 +51,5 @@ type UserStore interface {
 
 type ProductStore interface {
 	GetProducts() ([]Product, error)
+	CreateProduct(Product) error
 }
