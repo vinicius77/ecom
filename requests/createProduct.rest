@@ -1,0 +1,10 @@
+POST http://localhost:8080/api/v1/product
+Content-Type: application/json
+
+{
+  "name": "PS5",
+  "description": "Sony entertainment game",
+  "image": "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-dualsense-image-block-01-en-16nov23?$800px--t$",
+  "price": 5320.99,
+  "quantity": 900
+}
