@@ -112,8 +112,14 @@ FROM golang:1.18-alpine3.14 AS build-stage
 FROM build-stage AS run-test-stage
   RUN go test -v ./...
 
-  # This step is kinda a working around. More info below
-  RUN go run migration
+# Run the db migrations in the container
+FROM run-test-stage AS run-migrations-stage
+
+  RUN make migration add-user-table \
+  make migration add-product-table \
+  make migration add-order-table \
+  make migration add-order-items-table \
+  migrate-up
 
 # Deploy the application binary into a lean image
 FROM scratch AS build-release-stage
@@ -224,6 +230,12 @@ docker ps -a
 docker logs --tail 50 --follow --timestamps <container_id>
 ```
 
+</br>
+
+---
+
+### DEPRECATED SECTION (FIXED: updated the Docker file with migrations stage)
+
 Once I have fixed those issues and had both containers working I went to test the API calls. On sending `requests/getProducts.rest` it should return an empty array. But it did not, instead I got the following:
 
 ```bash
@@ -258,6 +270,12 @@ Once there I copied / paste the SQL instructions from `migrate/<timestamp>_<migr
 3. Once done I re tested the `requests/getProducts.rest` and this time I got an empty array
    `[]` as response body as expected (?).
 
+### END DEPRECATED SECTION
+
+---
+
+</br>
+
 **?\*** How I should migrate my local data to the db container is still a mystery for me. I will
 probably learn that later (hopefully).
 
@@ -273,3 +291,5 @@ List on Docker commands I have used most so far, including the ones already ment
 - Removing a given container: `docker rm <container_id>`
 - Removing a given image: `docker rmi <image_id>`
 - Testing a fresh docker compose build: `docker compose build --no-cache`
+- Listing containers: `docker container ls`
+- Listing images: `docker images`
