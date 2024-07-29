@@ -16,9 +16,15 @@ FROM golang:1.18-alpine3.14 AS build-stage
 FROM build-stage AS run-test-stage
   
   RUN go test -v ./...
-  
-  RUN go run migration
 
+# Run the db migrations in the container
+FROM run-test-stage AS run-migrations-stage
+  
+  RUN make migration add-user-table \
+  make migration add-product-table \
+  make migration add-order-table \
+  make migration add-order-items-table \
+  migrate-up
 
 # Deploy the application binary into a lean image
 FROM scratch AS build-release-stage
