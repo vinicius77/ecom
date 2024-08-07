@@ -80,7 +80,7 @@ func (m *mockUserStore) GetUserByEmail(email string) (*types.User, error) {
 	return nil, fmt.Errorf("user with email %s not found", email)
 }
 
-func (m *mockUserStore) GetUserById(id string) (*types.User, error) {
+func (m *mockUserStore) GetUserById(id int) (*types.User, error) {
 	return nil, nil
 }
 
