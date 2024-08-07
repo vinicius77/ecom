@@ -1,0 +1,16 @@
+POST http://localhost:8080/api/v1/cart/checkout
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTQ0OTk3NTAsInVzZXJJZCI6IjEwIn0.BVaXNuK-01ueUwDLk_om0heJXZW77iYq3a6WoHAt0To 
+
+{
+  "items": [
+    {
+    "productID": 5,
+    "quantity": 1
+    },
+    {
+      "productID": 6,
+      "quantity": 2
+    }
+  ]
+}
