@@ -293,3 +293,21 @@ List on Docker commands I have used most so far, including the ones already ment
 - Testing a fresh docker compose build: `docker compose build --no-cache`
 - Listing containers: `docker container ls`
 - Listing images: `docker images`
+
+### Error with JWT token
+
+The token was valid on [jwt.io](https://jwt.io/) but the application was throwing the following error:
+
+```bash
+failed to validate token: token signature is invalid: signature is invalid
+```
+
+To fix that you need to make the following changes on `cmd/service/user/auth/jwt.go` file:
+
+```diff
+token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+ "userId": strconv.Itoa(int(userID)),
+- "expiresAt": time.Now().Add(expiration).Unix(),
++	"exp":    time.Now().Add(expiration).Unix(),
+})
+```
